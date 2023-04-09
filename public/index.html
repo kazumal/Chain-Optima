@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ターミナル操作</title>
+</head>
+<body>
+    <input type="text" id="command" placeholder="コマンドを入力">
+    <button onclick="sendCommand()">実行</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function sendCommand() {
+            const command = document.getElementById('command').value;
+            const response = await fetch('/execute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command }),
+            });
+            const result = await response.text();
+            document.getElementById('output').textContent = result;
+        }
+    </script>
+</body>
+</html>
